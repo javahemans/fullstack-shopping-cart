@@ -9,7 +9,7 @@ import * as actions from '../actions';
 
 function* initCatalog() {
   try {
-    const catalog = yield axios.get('/api/catalog');
+    const catalog = yield axios.get('http://localhost:8888/api/catalog');
 
     yield put(actions.initCatalogSuccess(catalog.data));
   } catch(e) {
@@ -19,7 +19,7 @@ function* initCatalog() {
 
 function* getUser() {
   try {
-    const user = yield axios.get('/api/user');
+    const user = yield axios.get('http://localhost:8888/api/user');
 
     yield put(actions.getUserSucces(user.data));
   } catch(e) {
@@ -29,7 +29,7 @@ function* getUser() {
 
 function* getCart() {
   try {
-    const cart = yield axios.get('/api/cart');
+    const cart = yield axios.get('http://localhost:8888/api/cart');
 
     yield put(actions.getCartSuccess(cart.data));
   } catch(e) {

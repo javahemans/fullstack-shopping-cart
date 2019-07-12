@@ -33,7 +33,7 @@ class Cart extends React.Component<Props, State> {
   }
 
   removeItem = async (itemId: string) => {
-    await axios.put('/api/cart', {
+    await axios.put('http://localhost:8888/api/cart', {
       cartId: this.props.cart._id,
       itemId: itemId
     });
@@ -47,7 +47,7 @@ class Cart extends React.Component<Props, State> {
   }
 
   emptyCart = async () => {
-    await axios.delete('/api/cart', { params: { id: this.props.cart._id } });
+    await axios.delete('http://localhost:8888/api/cart', { params: { id: this.props.cart._id } });
     await this.setState({ activeModal: null });
     await this.props.getCart();
   }
@@ -63,7 +63,7 @@ class Cart extends React.Component<Props, State> {
       return order;
     });
 
-    await axios.post('/api/order', { order: order });
+    await axios.post('http://localhost:8888/api/order', { order: order });
     await this.emptyCart();
     
     this.setActiveModal('orderSuccess');

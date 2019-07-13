@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
@@ -14,18 +15,20 @@ const User = require('./models/User');
 const privates = require('./config/privates');
 
 // Uncomment to seed products to the database
-// const seedProducts = require('./seeds/products');
-// seedProducts();
+const seedProducts = require('./seeds/products');
+seedProducts();
 
-const publicPath = path.join(__dirname, 'client', 'public');
-const port = process.env.PORT || 5000;
+// const publicPath = path.join(__dirname, 'client', 'public');
+const port = process.env.PORT || 8888;
 
 const app = express();
 mongoose.connect(privates.mongoDBURI);
+// mongoose.connect('mongodb://localhost:27017/');
 
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
 
-app.use(express.static(publicPath));
+// app.use(express.static(publicPath));
+app.use(cors());
 app.use(urlencodedParser);
 app.use(expressSession({
   secret: privates.sessionSecret,
@@ -44,8 +47,8 @@ app.use('/api/user', userRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/order', orderRoutes);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(publicPath, 'index.html'));
+// });
 
 app.listen(port, () => console.log('SERVER NOW RUNNING...'));
